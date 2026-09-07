@@ -3138,6 +3138,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "example-usb-serial-logger"
+version = "0.0.0"
+dependencies = [
+ "ariel-os",
+ "ariel-os-boards",
+ "embassy-futures",
+ "embassy-sync 0.7.2",
+ "embedded-io-async 0.7.0",
+]
+
+[[package]]
 name = "extra-embedded-io-adapters"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
