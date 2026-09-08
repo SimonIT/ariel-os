@@ -32,7 +32,7 @@ The others may still be integrated by Ariel OS to implement specific functional
 ## Software Integration
 
 Ariel OS provides support for the USB peripheral role through [`embassy-usb`][embassy-usb-docsrs], which provides a consistent API across the supported hardware.
-It can be enabled with the `usb` Cargo feature.
+It can be enabled with the `usb` [laze module][laze-modules-book], which is only made available when the board features a USB device port.
 
 An instance of [`embassy_usb::Builder`][ariel-os-usbbuilder-rustdoc] is created by Ariel OS, on which support for well-known USB device classes can be added using a dedicated [Ariel OS task hook][task-attr-docs]:
 
@@ -103,3 +103,4 @@ Otherwise, an appropriate clock configuration must be [provided in the applicati
 [external-crystal-oscillator]: ./clocks.md#external-clock-signals
 [clock-tree-configuration-book]: ./clocks.md#configuring-the-clock-tree
 [usb-2.0-spec]: https://www.usb.org/document-library/usb-20-specification
+[laze-modules-book]: ./build-system.md#laze-modules
