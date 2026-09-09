@@ -23,6 +23,11 @@
       "matchManagers": ["cargo"],
       "dependencyDashboardApproval": true
     },
+    // Explicitly disable PR updates to our MSRV
+    {
+      "matchPackageNames": ["rust"],
+      "enabled": false
+    },
     {
       // Disable renovate for the packages we have patches for
       "matchPackageNames": [
