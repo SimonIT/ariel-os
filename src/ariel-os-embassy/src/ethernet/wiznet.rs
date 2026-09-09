@@ -27,6 +27,9 @@ use crate::{
     spi::main::{Kilohertz, SpiDevice, highest_freq_in},
 };
 
+/// Minimum SPI clock frequency to communicate with the WIZnet chip.
+const MIN_WIZNET_SPI_FREQUENCY: Kilohertz = Kilohertz::MHz(10);
+
 /// Maximum SPI clock frequency to communicate with the WIZnet chip.
 ///
 /// WIZnet chips are specified to support faster SPI clocks, but using the MCU's maximum
@@ -91,7 +94,9 @@ pub(crate) async fn device(
     let pins = board::take_pins(peripherals);
 
     let mut spi_config = hal::spi::main::Config::default();
-    spi_config.frequency = const { highest_freq_in(Kilohertz::kHz(1)..=MAX_WIZNET_SPI_FREQUENCY) };
+    spi_config.mode = crate::spi::Mode::Mode0;
+    spi_config.frequency =
+        const { highest_freq_in(MIN_WIZNET_SPI_FREQUENCY..=MAX_WIZNET_SPI_FREQUENCY) };
 
     let spi = board::WiznetSpi::new(pins.spi_sck, pins.spi_miso, pins.spi_mosi, spi_config);
 
