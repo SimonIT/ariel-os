@@ -34,9 +34,9 @@ const MIN_WIZNET_SPI_FREQUENCY: Kilohertz = Kilohertz::MHz(10);
 ///
 /// WIZnet chips are specified to support faster SPI clocks, but using the MCU's maximum
 /// available frequency (as [`hal::spi::main::Config::default()`] does) has been observed to
-/// corrupt reads (e.g. the chip version check failing) on at least the ESP32-S3. 20 MHz matches
-/// the clock speed used by Espressif's own W5500 examples and is a safe, well-tested choice.
-const MAX_WIZNET_SPI_FREQUENCY: Kilohertz = Kilohertz::MHz(20);
+/// corrupt reads (e.g. the chip version check failing) on at least the ESP32-S3. Espressif's
+/// own W5500 examples use 20 MHz, but 30 MHz has been tested to work reliably as well.
+const MAX_WIZNET_SPI_FREQUENCY: Kilohertz = Kilohertz::MHz(30);
 
 cfg_select! {
     feature = "wiznet-w5500" => {
