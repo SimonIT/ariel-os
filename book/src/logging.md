@@ -106,6 +106,26 @@ When `espflash` is selected at the time of compilation, `logging-over-debug-chan
 > - Other logging transports will later be supported, including UART and USB CDC-ACM on non-ESP32 devices.
 > - Using multiple transports at the same time may be supported in the future.
 
+### Custom Logging Transports
+
+An application can connect a custom logging transport to send the logs through.
+
+This is enabled using the `custom-logging-transport` [laze module][laze-modules-book]. This will 
+disable all other logging transports and gives access to [`register_custom_transport()`][register_custom_transport_fn].
+This functions takes two arguments: 
+ - `write_bytes`: this function should take a reference to a slice of bytes (`&[u8]`) as input and
+ send it through the transport.
+ - `flush`: this function should flush the data through the transport when available for
+the transport.
+
+> [!IMPORTANT]
+> The functions given to `register_custom_transport` must not wait on interrupts they may be called
+> in the context of a critical section and should not make calls to the logging facade.
+
+> [!NOTE]
+> The logs triggered before setting the logging transport functions using `register_custom_transport` 
+> may be lost.
+
 ## Fetching and Displaying the Logging Output on the Host
 
 When the [flashing][flashing-board-book] transport allows it, the `run` laze task not only flashes the board but also fetches and displays the logging output on the host.
@@ -145,3 +165,4 @@ When multiple tasks of the same name exist, which variant is used depends on whi
 [semihosting-book]: ./flashing-debugging.md#semihosting
 [laze-tasks-book]: ./build-system.md#laze-tasks
 [rtt-book]: ./flashing-debugging.md#real-time-transfer-rtt
+[register_custom_transport_fn]: https://ariel-os.github.io/ariel-os/dev/docs/api/ariel_os/log/transport/fn.register_custom_transport.html
